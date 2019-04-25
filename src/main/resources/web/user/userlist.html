@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+</head>
+<body>
+
+<div>
+    <h4>用户列表</h4>
+    <ul>
+
+        <#list users as user>
+        <li>Name:${user.name}&nbsp;&nbsp;&nbsp; Age:${user.age}&nbsp;&nbsp;&nbsp;email:${user.email}<a href="updateuser.html?userId=${user.id}" >编辑</a></li>
+        </#list>
+    </ul>
+
+
+
+
+</div>
+
+
+</body>
+</html>
