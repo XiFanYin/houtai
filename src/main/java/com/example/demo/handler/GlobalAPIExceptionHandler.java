@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /*配置API统一错误管理*/
-@ControllerAdvice(basePackages = {"com.example.demo.module.area","com.example.demo.module.user"})
+@ControllerAdvice()
 public class GlobalAPIExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalAPIExceptionHandler.class);
 
@@ -28,6 +28,7 @@ public class GlobalAPIExceptionHandler {
             System.out.println("================");
         } else {
             logger.error("系统异常:" + e.getMessage(), e);
+
         }
 
         return JSONObject.toJSON(result);
