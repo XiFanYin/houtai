@@ -3,13 +3,26 @@ package com.example.demo.module.user.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sun.org.apache.xml.internal.serializer.utils.SerializerMessages_zh_CN;
+
+import java.io.Serializable;
 
 /**
  *  @JsonIgnore 忽略这个字段不返回
  *   @JsonFormat(pattern = "yy-MM-dd hh:mm:ss a" ,locale = "zh",timezone = "GMT+8")//格式化时间
  *   @JsonInclude(JsonInclude.Include.NON_NULL)//如果该字段为null，就不显示给前台
  */
-public class User {
+public class User implements Serializable {
+    @Override
+    public String
+    toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                '}';
+    }
 
     private Long id;
 

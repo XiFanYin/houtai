@@ -28,6 +28,7 @@ public class GlobalAPIExceptionHandler {
             System.out.println("================");
         } else {
             logger.error("系统异常:" + e.getMessage(), e);
+            result.setMessage(e.getMessage());
 
         }
 

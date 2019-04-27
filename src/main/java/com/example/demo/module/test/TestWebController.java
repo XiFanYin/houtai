@@ -1,17 +1,14 @@
 package com.example.demo.module.test;
 
-import com.example.demo.config.redis.RedisRepository;
 import com.example.demo.module.user.entity.User;
 import com.example.demo.module.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import reactor.core.publisher.Mono;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,15 +48,19 @@ public class TestWebController {
         return "user/updateuser";
     }
 
+
     @Autowired
-    RedisRepository redisRepo;
+    private RedisTemplate redisTemplate;
 
     @RequestMapping("/test")
     @ResponseBody
     public Map testRedis() {
         Map map = new HashMap();
-        redisRepo.add("key", "hello~",5000L);
-        map.put("key", redisRepo.get("key"));
+        List<User> users = userService.selectAllUserList(2);
+        redisTemplate.opsForList().rightPushAll("users_key",users);
+        List key = redisTemplate.opsForList().range("users", 0, 7);
+        map.put("users",key);
+
         return map;
     }
 
