@@ -1,16 +1,20 @@
 package com.example.demo.module.test;
 
+import com.example.demo.bean.Student;
 import com.example.demo.config.redis.RedisCacheUtils;
 import com.example.demo.module.user.entity.User;
 import com.example.demo.module.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/test")
@@ -51,18 +55,22 @@ public class TestWebController {
     @Autowired
     private RedisCacheUtils redisCacheUtils;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
     @RequestMapping("/test")
     @ResponseBody
     public Map testRedis() {
         Map map = new HashMap();
-        Map map1 = new HashMap();
+        List list = new ArrayList();
+        list.add(new Student("张三"));
+        list.add(new Student("李四"));
+        list.add(new Student("丁一"));
 
+        redisCacheUtils.setList("key1",list);
 
+        List key1 = redisCacheUtils.getList("key1");
 
-        redisCacheUtils.setMapAppend("key6",map1);
-        redisCacheUtils.setLiveDate("key6",5000,TimeUnit.MILLISECONDS);
-        Map key6 = redisCacheUtils.getMap("key6");
-        map.put("key",key6);
+        map.put("key",key1);
         return map;
     }
 

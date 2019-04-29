@@ -174,10 +174,8 @@ public class RedisCacheUtils {
      */
     public void setMapAppend(String key, Map value) {
         redisTemplate.opsForHash().putAll(key, value);
+
     }
-
-
-
 
 
 
@@ -247,11 +245,11 @@ public class RedisCacheUtils {
     /**
      * 放入set
      *
-     * @param key   缓存的key    会覆盖原来的值
+     * @param key    缓存的key    会覆盖原来的值
      * @param values 缓存的value
      */
-    public void setZSet(String key, Set values ) {
-        redisTemplate.opsForZSet().add(key,values);
+    public void setZSet(String key, Set values) {
+        redisTemplate.opsForZSet().add(key, values);
     }
 
     /**
@@ -268,12 +266,13 @@ public class RedisCacheUtils {
 
     /**
      * 设置数据的声明周期
+     *
      * @param key
      * @param timeOut
      * @param unit
      * @return
      */
-    public boolean setLiveDate(String  key,long timeOut, TimeUnit unit) {
-       return redisTemplate.	expire(key,timeOut,unit);
+    public boolean setLiveDate(String key, long timeOut, TimeUnit unit) {
+        return redisTemplate.expire(key, timeOut, unit);
     }
 }
