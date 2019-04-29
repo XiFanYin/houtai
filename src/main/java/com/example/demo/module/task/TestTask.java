@@ -17,6 +17,7 @@ public class TestTask {
     @Scheduled(cron="4-40 * * * * ? ")
     public void  reportCurrentTime(){
         System.out.println("当前时间是"+dataFormat.format(new Date()));
+
      }
 
 }

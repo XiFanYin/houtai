@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.example.demo.**.dao")
 /*开启定时任务开关，会自动被springboot2容器管理*/
 @EnableScheduling
+
 public class DemoApplication {
 
     public static void main(String[] args) {
