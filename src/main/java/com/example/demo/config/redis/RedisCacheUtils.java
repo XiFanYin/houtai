@@ -4,11 +4,10 @@ package com.example.demo.config.redis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Repository
@@ -63,8 +62,6 @@ public class RedisCacheUtils {
      */
     public void setStringAppend(String key, String value) {
         stringRedisTemplate.opsForValue().append(key, value);
-        String a = "";
-
     }
 
     /**
@@ -141,6 +138,7 @@ public class RedisCacheUtils {
      */
     public void setLongMinus(String key, Long value) {
         stringRedisTemplate.opsForValue().decrement(key, value);
+
     }
 
     /**
@@ -154,6 +152,7 @@ public class RedisCacheUtils {
 
     /**
      * 通过key删除对应的缓存，这里用哪个对象都一样
+     *
      * @param key
      * @return
      */
@@ -167,5 +166,114 @@ public class RedisCacheUtils {
 
     //==========================================================对于Map类型的操作==================================================================
 
+    /**
+     * 放入Map
+     *
+     * @param key   缓存的key    不会覆盖原来的值
+     * @param value 缓存的value
+     */
+    public void setMapAppend(String key, Map value) {
+        redisTemplate.opsForHash().putAll(key, value);
+    }
 
+
+
+
+
+
+
+    /**
+     * 获取存的map
+     *
+     * @param key
+     * @return
+     */
+    public Map getMap(String key) {
+
+        return redisTemplate.opsForHash().entries(key);
+    }
+
+    //==========================================================对于List类型的操作==================================================================
+
+    /**
+     * 放入List
+     *
+     * @param key   缓存的key    会覆盖原来的值
+     * @param value 缓存的value
+     */
+    public void setList(String key, List value) {
+        redisTemplate.opsForList().rightPushAll(key, value);
+    }
+
+    /**
+     * 获取存的List
+     *
+     * @param key
+     * @return
+     */
+    public List getList(String key) {
+
+        return redisTemplate.opsForList().range(key, 0L, -1L);
+    }
+
+    //==========================================================对于无序set类型的操作==================================================================
+
+
+    /**
+     * 放入set
+     *
+     * @param key   缓存的key    会覆盖原来的值
+     * @param value 缓存的value
+     */
+    public void setSet(String key, Set value) {
+        redisTemplate.opsForSet().add(key, value);
+    }
+
+    /**
+     * 获取存的Set
+     *
+     * @param key
+     * @return
+     */
+    public Set getSet(String key) {
+
+        return redisTemplate.opsForSet().members(key);
+    }
+
+
+    //==========================================================对于有序set类型的操作==================================================================
+
+
+    /**
+     * 放入set
+     *
+     * @param key   缓存的key    会覆盖原来的值
+     * @param values 缓存的value
+     */
+    public void setZSet(String key, Set values ) {
+        redisTemplate.opsForZSet().add(key,values);
+    }
+
+    /**
+     * 获取存的Set
+     *
+     * @param key
+     * @return
+     */
+    public Set getZSet(String key) {
+        return redisTemplate.opsForZSet().range(key, 0, -1);
+    }
+
+//==================================================================================================
+
+    /**
+     * 设置数据的声明周期
+     * @param key
+     * @param timeOut
+     * @param unit
+     * @return
+     */
+    public boolean setLiveDate(String  key,long timeOut, TimeUnit unit) {
+       return redisTemplate.	expire(key,timeOut,unit);
+    }
 }

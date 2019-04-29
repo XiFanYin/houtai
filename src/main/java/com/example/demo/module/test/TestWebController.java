@@ -9,10 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("/test")
@@ -57,26 +55,14 @@ public class TestWebController {
     @ResponseBody
     public Map testRedis() {
         Map map = new HashMap();
-        map.put("key1","nihao4");
-        map.put("key2","nihao4");
-        map.put("key3","nihao4");
-        map.put("key4","nihao4");
-        map.put("key5","nihao5");
-        map.put("key6","nihao6");
+        Map map1 = new HashMap();
 
 
 
-        ArrayList<String> arr = new ArrayList<>();
-        arr.add("key1");
-        arr.add("key2");
-        arr.add("key3");
-        arr.add("key4");
-        arr.add("key5");
-        arr.add("key6");
-        List<String> moreString = redisCacheUtils.getMoreString(arr);
-
-
-
+        redisCacheUtils.setMapAppend("key6",map1);
+        redisCacheUtils.setLiveDate("key6",5000,TimeUnit.MILLISECONDS);
+        Map key6 = redisCacheUtils.getMap("key6");
+        map.put("key",key6);
         return map;
     }
 
