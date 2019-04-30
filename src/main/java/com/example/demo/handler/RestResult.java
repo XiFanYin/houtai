@@ -9,19 +9,20 @@ public class RestResult {
     /**
      * 成功或者失败的code错误码
      */
-    private String code;
+    private int code;
     /**
      * 成功时返回的数据，失败时返回具体的异常信息
      */
     private Object data;
 
-    public RestResult() {
-    }
 
-    public RestResult(String message, String code, Object data) {
+    public RestResult(String message, int code, Object data) {
         this.message = message;
         this.code = code;
         this.data = data;
+    }
+
+    public RestResult() {
     }
 
     public String getMessage() {
@@ -32,11 +33,11 @@ public class RestResult {
         this.message = message;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
@@ -52,7 +53,7 @@ public class RestResult {
     public String toString() {
         return "RestResult{" +
                 "message='" + message + '\'' +
-                ", code='" + code + '\'' +
+                ", code=" + code +
                 ", data=" + data +
                 '}';
     }

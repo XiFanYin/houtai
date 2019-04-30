@@ -24,7 +24,7 @@ public class RestResultWrapper implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         System.out.print("统一外边再套一层");
         if(!(body instanceof RestResult)) {
-            RestResult result = new RestResult("请求成功", "0", body);
+            RestResult result = new RestResult("请求成功", 0, body);
             return result;
         }
 
